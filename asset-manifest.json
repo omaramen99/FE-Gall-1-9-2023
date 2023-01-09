@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.08672314.chunk.css",
+    "main.js": "/static/js/main.02ae4497.chunk.js",
+    "main.js.map": "/static/js/main.02ae4497.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.da10b639.js",
+    "runtime-main.js.map": "/static/js/runtime-main.da10b639.js.map",
+    "static/js/2.5cf81bda.chunk.js": "/static/js/2.5cf81bda.chunk.js",
+    "static/js/2.5cf81bda.chunk.js.map": "/static/js/2.5cf81bda.chunk.js.map",
+    "static/js/3.d6619a16.chunk.js": "/static/js/3.d6619a16.chunk.js",
+    "static/js/3.d6619a16.chunk.js.map": "/static/js/3.d6619a16.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.08672314.chunk.css.map": "/static/css/main.08672314.chunk.css.map",
+    "static/js/2.5cf81bda.chunk.js.LICENSE.txt": "/static/js/2.5cf81bda.chunk.js.LICENSE.txt",
+    "static/media/A.09107543.png": "/static/media/A.09107543.png",
+    "static/media/Gall_Header_comp.css": "/static/media/Aeonik-Regular.4f36f688.otf",
+    "static/media/ss.6ca3b8c3.gif": "/static/media/ss.6ca3b8c3.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da10b639.js",
+    "static/js/2.5cf81bda.chunk.js",
+    "static/css/main.08672314.chunk.css",
+    "static/js/main.02ae4497.chunk.js"
+  ]
+}
