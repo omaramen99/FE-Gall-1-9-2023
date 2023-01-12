@@ -417,9 +417,9 @@ import loadingGif from '../media/ss.gif';
             var canvas = document.querySelector("#unity-canvas");
             var buildUrl = "Build";
             var config = {
-              dataUrl: buildUrl + "/23.data.gz",
-              frameworkUrl: buildUrl + "/23.framework.js.gz",
-              codeUrl: buildUrl + "/23.wasm.gz",
+              dataUrl: buildUrl + "/23.data.br",
+              frameworkUrl: buildUrl + "/23.framework.js.br",
+              codeUrl: buildUrl + "/23.wasm.br",
               streamingAssetsUrl: "StreamingAssets",
               companyName: "DefaultCompany",
               productName: "FM-BIM-Viewer",
