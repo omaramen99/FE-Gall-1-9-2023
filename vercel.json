@@ -1,15 +1,15 @@
 {
     "headers": [
       {
-        "source": "/Build/23.data.br",
+        "source": "/Build/23.framework.js.br",
         "headers" : [
           {
             "key" : "Content-Encoding",
             "value" : "br"
           },
           {
-            "key" : "application/octet-stream",
-            "value" : ".data.br"
+            "key" : "Content-Type",
+            "value" : "application/javascript"
           }
         ]
       }
