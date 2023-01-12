@@ -220,7 +220,7 @@ var notesElements = []
           { label: "Initiation date", value: (row) => (row.initDate) },
           { label: "Closed date", value: (row) => (row.closeDate || "notClosed") },
           { label: "Title", value: (row) => (row.title) },
-          { label: "Workorder ID", value: (row) => (row.id) },
+          // { label: "Workorder ID", value: (row) => (row.id) },
           { label: "Element ID", value: (row) => (row.eid) },
           { label: "Type", value: (row) => (row.type.substring(3)) },
           { label: "Assigned to", value: (row) => (row.email) },
@@ -316,8 +316,15 @@ var notesElements = []
     return (
       <>
       <div class=" gal-issues-page-container">
-      <button type="button" class="btn btn-outline-success" onClick={()=>{this.ExportAndDownloadWorkordersReport()}}>Export workorders report <i class="fa-solid fa-file-excel"></i></button>
+        
+        <div className='IssuesPageToolsTopBar'>
+          <button type="button" class="btn btn-outline-dark" disabled><i class="fa-solid fa-magnifying-glass"></i></button>
+          <div className='IssuesPageToolsTopBarSep'></div>
+          <button type="button" class="btn btn-outline-dark" disabled><i class="fa-solid fa-filter"></i></button>
+          <div className='IssuesPageToolsTopBarSep'></div>
+          <button type="button" class="btn btn-outline-dark" onClick={()=>{this.ExportAndDownloadWorkordersReport()}}>Export workorders report <i class="fa-solid fa-file-excel"></i></button>
 
+        </div>
 
         <div class="row gal-issues-page-tableHeader">
           <div class="col-6 gal-issues-page-issueTitle">Issue Title</div>

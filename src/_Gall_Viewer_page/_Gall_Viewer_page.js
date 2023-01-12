@@ -143,7 +143,7 @@ import loadingGif from '../media/ss.gif';
          window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 2);
          setTimeout(() => {
           window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
-         }, 100);
+         }, 500);
     }
     window.OnAppLoad = (data) =>
     {

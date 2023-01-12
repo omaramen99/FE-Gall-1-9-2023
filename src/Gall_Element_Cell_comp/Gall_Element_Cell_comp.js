@@ -37,7 +37,7 @@ import { OnRevitElementSelected } from '../store/actions';
       if(window.LOADED)
       {
         if (true) {
-          if (this.props.state.SelectedRevitElementId != "" && this.props.state.SelectedRevitElementId != "-1") {//if there is selected element
+          if (this.props.state.SelectedRevitElementId != "" && this.props.state.SelectedRevitElementId != "-1" && this.props.state.SelectedRevitElementData.Element) {//if there is selected element
             if (this.props.ElementId == this.props.state.SelectedRevitElementData.Element.i) {//if it's the selected element
               
               if (this.props.state.SelectedRevitElementId != this.state.lastSelectedElementId) {
@@ -70,7 +70,7 @@ import { OnRevitElementSelected } from '../store/actions';
                      selectionClass:'-selected',
                      lastSelectedElementId:this.props.state.SelectedRevitElementId
                    })
-                   document.getElementById(this.props.ElementName).scrollIntoView();
+                   document.getElementById(this.props.ElementName).scrollIntoView({behavior: "smooth", block: "center"});
             
                  }else
                  {//unSelect
@@ -93,7 +93,7 @@ import { OnRevitElementSelected } from '../store/actions';
                    selectionClass:'-selected',
                    lastSelectedElementId:this.props.state.SelectedRevitElementId
                  })
-                 document.getElementById(this.props.ElementName).scrollIntoView();
+                 document.getElementById(this.props.ElementName).scrollIntoView({behavior: "smooth", block: "center"});
           
                }else
                {//unSelect
@@ -110,7 +110,7 @@ import { OnRevitElementSelected } from '../store/actions';
         }
       }
     }, 1);
-    //console.log("o");
+    
   }
   ToggleVisability(e)
   {
@@ -144,8 +144,12 @@ import { OnRevitElementSelected } from '../store/actions';
   FocusAndSelectElement(){
     //alert(`Selected [${this.props.ElementId}]`)865793
     //this.props.OnRevitElementSelected("865793")
-    this.props.OnRevitElementSelected(this.props.ElementId)
-    window._unityInstance.SendMessage('GameManager', 'JS_SelectElement', this.props.ElementId);
+    this.props.OnRevitElementSelected([this.props.ElementId,{}])
+    window._unityInstance.SendMessage('GameManager', 'JS_JustSelectAndFocusElement', this.props.ElementId);
+    window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 2);
+    setTimeout(() => {
+     window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
+    }, 500);
     //console.log(bim_tree);
   }
 /////////////////////////////////////////

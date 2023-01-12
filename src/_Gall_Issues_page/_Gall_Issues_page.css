@@ -271,3 +271,14 @@ font-weight: 600;
   overflow-x: visible;
   overflow-y: clip;
 }
+.IssuesPageToolsTopBar
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  background-color: #209a4900;
+  border-bottom: 1px solid #2b4c9a;
+}
+.IssuesPageToolsTopBarSep{display: inline-block; height: 30px; width: 0px; border: 1px solid black;  margin: 0px 10px;}
