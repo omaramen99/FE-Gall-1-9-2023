@@ -1,0 +1,14 @@
+{
+    "headers": [
+      {
+        "source": "/Build/23.framework.js.br",
+        "headers" : [
+          {
+            "key" : "Content-Encoding",
+            "value" : "br"
+          }
+        ]
+      }
+
+    ]
+  }
