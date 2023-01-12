@@ -27,9 +27,25 @@ import {bim_tree} from '../BIM_META_DATA'
     arrowStateClass:"right"
   };
 
-  componentDidMount()
+  componentDidUpdate()
   {
 
+  }
+  componentDidMount()
+  {
+    setInterval(() => {
+      if(window.LOADED)
+      {
+        if (!this.state.expanded) {//if only was closed
+          if (this.props.state.SelectedRevitElementId != "" && this.props.state.SelectedRevitElementId != "-1") {//if there is selected element
+            if (this.props.CategoryName == this.props.state.SelectedRevitElementData.Category.n) {//if it's selected element category
+              //Expand
+              this.ToggleChilds()
+            }
+          }
+        }
+      }
+    }, 1);
 
 
   }

@@ -29,27 +29,87 @@ import { OnRevitElementSelected } from '../store/actions';
   componentDidUpdate()
   {
 
-   if (this.props.state.SelectedRevitElementId != this.state.lastSelectedElementId) {//changed
-     if (this.props.state.SelectedRevitElementId == this.props.ElementId)
-     {
-       this.setState({
-         selectionClass:'-selected',
-         lastSelectedElementId:this.props.state.SelectedRevitElementId
-       })
 
-     }else
-     {
-       this.setState({
-         selectionClass:'',
-         lastSelectedElementId:this.props.state.SelectedRevitElementId
-       })
-
-     }
-
-   }
   }
   componentDidMount()
   {
+    setInterval(() => {
+      if(window.LOADED)
+      {
+        if (true) {
+          if (this.props.state.SelectedRevitElementId != "" && this.props.state.SelectedRevitElementId != "-1") {//if there is selected element
+            if (this.props.ElementId == this.props.state.SelectedRevitElementData.Element.i) {//if it's the selected element
+              
+              if (this.props.state.SelectedRevitElementId != this.state.lastSelectedElementId) {
+                //changed
+                 if (this.props.state.SelectedRevitElementId == this.props.ElementId)
+                 {//select
+                   this.setState({
+                     selectionClass:'-selected',
+                     lastSelectedElementId:this.props.state.SelectedRevitElementId
+                   })
+                   document.getElementById(this.props.ElementName).scrollIntoView({behavior: "smooth", block: "center"});
+            
+                 }else
+                 {//unSelect
+                   this.setState({
+                     selectionClass:'',
+                     lastSelectedElementId:this.props.state.SelectedRevitElementId
+                   })
+            
+                 }
+            
+               }
+            }else
+            {
+              if (this.props.state.SelectedRevitElementId != this.state.lastSelectedElementId) {
+                //changed
+                 if (this.props.state.SelectedRevitElementId == this.props.ElementId)
+                 {//select
+                   this.setState({
+                     selectionClass:'-selected',
+                     lastSelectedElementId:this.props.state.SelectedRevitElementId
+                   })
+                   document.getElementById(this.props.ElementName).scrollIntoView();
+            
+                 }else
+                 {//unSelect
+                   this.setState({
+                     selectionClass:'',
+                     lastSelectedElementId:this.props.state.SelectedRevitElementId
+                   })
+            
+                 }
+            
+               }
+            }
+          }else
+          {
+            if (this.props.state.SelectedRevitElementId != this.state.lastSelectedElementId) {
+              //changed
+               if (this.props.state.SelectedRevitElementId == this.props.ElementId)
+               {//select
+                 this.setState({
+                   selectionClass:'-selected',
+                   lastSelectedElementId:this.props.state.SelectedRevitElementId
+                 })
+                 document.getElementById(this.props.ElementName).scrollIntoView();
+          
+               }else
+               {//unSelect
+                 this.setState({
+                   selectionClass:'',
+                   lastSelectedElementId:this.props.state.SelectedRevitElementId
+                 })
+          
+               }
+          
+             }
+
+          }
+        }
+      }
+    }, 1);
     //console.log("o");
   }
   ToggleVisability(e)
@@ -95,7 +155,7 @@ import { OnRevitElementSelected } from '../store/actions';
     return (
       <>
 
-            <tr>
+            <tr id={this.props.ElementName}>
               <td onClick={() => {this.FocusAndSelectElement()}} class={`gall-table-cell-ele${this.state.selectionClass}`}>
                 <i class="fa-solid fa-cube gall-elements-list-3d-element-smp"></i><div class="gall-elements-list-cell-text">{this.props.ElementName}</div> <div onClick={(e) => {this.ToggleVisability(e)}} class="gall-elements-list-cell-side-buttons"><i class={`fa-solid fa-eye${this.state.visabilityClass}`}></i></div></td>
             </tr>

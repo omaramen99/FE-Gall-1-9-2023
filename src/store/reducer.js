@@ -5,6 +5,7 @@ export default (state = {
     history:false,
     match:{},
     SelectedRevitElementId:"",
+    SelectedRevitElementData:{},
     workorderID:"",
     workorders:[],
     loaded:false,
@@ -32,7 +33,8 @@ export default (state = {
           case 'ON_REVIT_ELEMENT_SELECTED':
                return {
                     ...state,
-                    SelectedRevitElementId : action.payload,
+                    SelectedRevitElementId : action.payload[0],
+                    SelectedRevitElementData : action.payload[1]
                }; 
           case 'ON_WORKORDER_CREATION_FORM_OPENED':
                return {

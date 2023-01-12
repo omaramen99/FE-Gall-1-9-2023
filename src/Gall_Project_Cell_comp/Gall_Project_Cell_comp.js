@@ -56,6 +56,7 @@ import {bim_tree} from '../BIM_META_DATA'
   Expand()
   {
 
+
     if (!this.state.expandedFlag) {
       let Cat = bim_tree.c.find(cat => cat.n == this.props.CategoryName)
       //let Fam = Cat.f.find(fam => fam.n == this.props.FamilyName)

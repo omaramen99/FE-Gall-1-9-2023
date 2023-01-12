@@ -16,6 +16,7 @@ import Gall_Left_Side_Menu_comp from '../Gall_Left_Side_Menu_comp/Gall_Left_Side
 import Gall_Viewer_Tool_bar_comp from '../Gall_Viewer_Tool_bar_comp/Gall_Viewer_Tool_bar_comp'
 import Gall_Issues_Menu_comp from '../Gall_Issues_Menu_comp/Gall_Issues_Menu_comp'
 // import {nodemailer} from 'nodemailer'
+import {bim_tree} from '../BIM_META_DATA'
 import {Helmet} from "react-helmet";
 
 import loadingGif from '../media/ss.gif';
@@ -109,11 +110,44 @@ import loadingGif from '../media/ss.gif';
 
     window.OnElementSelection = (ElementId) =>
     {
-       //alert(ElementId);
-       this.props.OnRevitElementSelected(ElementId)
+      ////////GetElementDataById
+       var ElementData = {}
+       var IsElementBeenFound = false;
+       bim_tree.c.find(cat =>
+         { cat.f.find(fam =>
+           {
+             fam.t.find(typ => {
+               typ.e.find(ele => {
+                 if (ele.i == ElementId) {
+                  IsElementBeenFound = true;
+                   ElementData.Element = ele;
+                   return true;
+                 }
+               })
+               if (IsElementBeenFound) {
+                ElementData.Type = typ;
+                 return true;
+               }
+             })
+             if (IsElementBeenFound) {
+              ElementData.Family = fam;
+               return true;
+             }
+           })
+           if (IsElementBeenFound) {
+            ElementData.Category = cat;
+             return true;
+           }
+         })
+         this.props.OnRevitElementSelected([ElementId,ElementData])
+         window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 2);
+         setTimeout(() => {
+          window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
+         }, 100);
     }
     window.OnAppLoad = (data) =>
     {
+      window.LOADED = true
        //alert("Loaded");
 
        document.getElementById("ViewerLoadingContainer-backID").style.display = "none"
