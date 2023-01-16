@@ -35,14 +35,14 @@ import xlsx from "json-as-xlsx"
   componentDidMount()
   {
 
-    this.AddInitialIssues()
     this.RecordHistory()
+    this.AddInitialIssues()
 
     var xx = []
     setTimeout(() => {
       for (let i = this.props.state.workorders.length-1; i >= 0; i--) {
         xx = [...xx,
-          <div class="row gal-issues-page-tableRow" onClick={(e)=>{this.OpenIssueModal(this.props.state.workorders[i])}} >
+          <div id={this.props.state.workorders[i].id} class="row gal-issues-page-tableRow" onClick={(e)=>{this.OpenIssueModal(this.props.state.workorders[i])}} >
           <div class="col-6 gal-issues-page-issueTitle-cell">{this.props.state.workorders[i].title}</div>
           <div class="col-3 gal-issues-page-issueType-cell"><div class={`gal-issues-page-issueType-cell-capsule gal-issues-page-issueType-cell-capsule-${this.props.state.workorders[i].typeC}`}></div></div>
           <div class="col-3 gal-issues-page-assignTo-cell">{this.props.state.workorders[i].email}</div>
@@ -52,6 +52,12 @@ import xlsx from "json-as-xlsx"
       this.setState({
         workorders:xx
       })
+      if (this.props.match.params.id) {
+        setTimeout(() => {
+          document.getElementById(this.props.match.params.id).click()
+        }, 100);
+      }
+      
       
     }, 100);
   }
@@ -153,8 +159,12 @@ var notesElements = []
 
   AddInitialIssues()
   {
+    var isFromMail = false;
     var workorders = this.props.state.workorders;
     if (workorders.length == 0) {
+      if (this.props.match.params.id) {
+        isFromMail = true
+      }
  
        workorders = [
         
@@ -205,6 +215,13 @@ var notesElements = []
            ]
           },
       ]
+      if (isFromMail) {
+        var issueUrlObj = this.props.match.params;
+        issueUrlObj.notes= []
+        workorders = [...workorders, 
+          issueUrlObj
+          ]
+      }
         this.props.OnCreateWorkorder([...this.props.state.workorders, ...workorders])
       
     }

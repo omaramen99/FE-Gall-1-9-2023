@@ -48,8 +48,8 @@ function App() {
     
     
     <Route path='/project' exact component={_Gall_Viewer_page} />
-    <Route path='/issues' exact component={_Gall_Issues_page} />
     <Route path='/' exact component={_Gall_Viewer_page} />
+    <Route path='/issues/:id?/:eid?/:type?/:typeC?/:effect?/:title?/:desc?/:email?/:initDate?' component={_Gall_Issues_page} />
     
     {/* <Route path='/profile' exact component={Profile_Page_comp} />
     <Route path='/user' exact component={User_Profile_Page_comp} />
