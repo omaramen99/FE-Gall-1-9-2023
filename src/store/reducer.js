@@ -12,7 +12,8 @@ export default (state = {
     selectedWorkorder:{workorder_id:'-1'},
     browserVisability:false,
     workordersVisability:false,
-    IssueToView:{}
+    IssueToView:{},
+    firstTimeLoaded:false
 
 
 }, action) => {
@@ -71,10 +72,14 @@ export default (state = {
                     ...state,
                     IssueToView : action.payload,
                };
-
+          case 'ON_VIEWER_FIRST_LOAD':
+               return {
+                    ...state,
+                    firstTimeLoaded : true,
+               };
                
                
-
+               
           
         
             

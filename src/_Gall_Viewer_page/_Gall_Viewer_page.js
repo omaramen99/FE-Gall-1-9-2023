@@ -11,7 +11,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import axios from 'axios';
 import { connect } from 'react-redux';
-import {OnRevitElementSelected, OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnToggleBrowserVisability,OnToggleWorkordersVisability,OnIssueViewInViewer } from '../store/actions';
+import {OnRevitElementSelected, OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnToggleBrowserVisability,OnToggleWorkordersVisability,OnIssueViewInViewer,OnViewerFirstLoad } from '../store/actions';
 import Gall_Left_Side_Menu_comp from '../Gall_Left_Side_Menu_comp/Gall_Left_Side_Menu_comp'
 import Gall_Viewer_Tool_bar_comp from '../Gall_Viewer_Tool_bar_comp/Gall_Viewer_Tool_bar_comp'
 import Gall_Issues_Menu_comp from '../Gall_Issues_Menu_comp/Gall_Issues_Menu_comp'
@@ -28,32 +28,24 @@ import loadingGif from '../media/ss.gif';
     
   componentWillUnmount()
   {
-    window._unityInstance.Quit();
+    
+    //reset
+    /////////window._unityInstance.Quit();
+
+    //move canvas to the hidden element
+    document.getElementById('fakeViewerContainer').appendChild(document.getElementById('unity-canvas'))
+    ///////////////
     this.props.OnToggleBrowserVisability(false)
     this.props.OnToggleWorkordersVisability(false)
     this.props.OnViewerLoad(false);
-
   }
   componentDidMount()
   {
 
     this.RecordHistory();
-    // var test = document.getElementById("mydivvv")
-    // test.addEventListener("mouseleave", function (event) {
-    //   console.log("out")
-    // }, false);
-    // test.addEventListener("mouseover", function (event) {
-    //   console.log("in")
-    // }, false);
-    
-    // window.$(document).mousemove(function(){
-    //   if(window.$("#mydivvv").length != 0){
-    //     console.log("in")
-    //  } else{
-    //   console.log("out")
-    //  }})
 
-     document.getElementById("gall-tools-bar-container").onmouseenter = function() {
+
+    document.getElementById("gall-tools-bar-container").onmouseenter = function() {
      try {
       window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
     } catch (error) {}
@@ -64,49 +56,12 @@ import loadingGif from '../media/ss.gif';
        window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
      } catch (error) {}
      }
-     document.getElementById("unity-canvas").onmouseout  = function() {
+    document.getElementById("unity-canvas").onmouseout  = function() {
       document.getElementById("mydivvvv").focus()
-          try {
-            window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 2);
-          } catch (error) {}
+      try {
+        window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 2);
+      } catch (error) {}
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // setInterval(() => {
-    //   if (document.activeElement === document.getElementById('unity-canvas')) {
-    //     if (window.s == 0) {
-    //       //alert("aa")
-    //       window.s = 1;
-    //       try {
-            
-    //         ////window._unityInstance.SendMessage('GameManager', 'unFreezeApp3', '');
-    //         window._unityInstance.SendMessage('GameManager', 'JS_SetAppDefaultFPS', '');
-    //       } catch (error) {}
-    //     }
-    //   }else
-    //   {
-    //     window.s = 0;
-    //     try {          
-    //       window._unityInstance.SendMessage('GameManager', 'JS_SetAppFPS', 1);
-    //     } catch (error) {}
-        
-    //   }
-
-    // }, 10);
 
 
     window.OnElementSelection = (ElementId) =>
@@ -150,7 +105,6 @@ import loadingGif from '../media/ss.gif';
     {
       window.LOADED = true
        //alert("Loaded");
-
        document.getElementById("ViewerLoadingContainer-backID").style.display = "none"
        document.getElementById("ViewerLoadingContainer-frontID").style.display = "none"
        this.AddInitialIssues();
@@ -164,39 +118,63 @@ import loadingGif from '../media/ss.gif';
         window._unityInstance.SendMessage('GameManager', 'JS_SelectAndFocusElement', this.props.state.IssueToView.workorderEID);
         this.props.OnIssueViewInViewer({})
        }
-      //EditViewer Resulotion   //affects the elements selection!
-      //// var viewerCanvas = document.getElementById('unity-canvas')
-      //// viewerCanvas.attributes['height'].value = window.innerHeight * 0.9
-      //// viewerCanvas.attributes['width'].value = window.innerWidth * 0.9
     }
+    if (this.props.state.firstTimeLoaded) {
+     // alert('A')
+      //initial settings -RESET-
+      document.getElementById('unity-container').appendChild(document.getElementById('unity-canvas'))
+      var canvases = document.getElementsByClassName('drawingCanvas');
+      var toBeDeleted = {}
+      var old = {}
+      for (let i = 0; i < canvases.length; i++) {
+        if (canvases[i].attributes['original'].nodeValue == "0") {
+          old = canvases[i]
+        }
+        if (canvases[i].attributes['original'].nodeValue == "1") {
+          toBeDeleted = canvases[i]
+        }
 
+      }
+      // console.log("###############################################################################################");
+      // console.log(canvases);
+      // console.log(toBeDeleted);
+      // console.log(old);
+     old.attributes['width'].nodeValue = toBeDeleted.attributes['width'].nodeValue;
+     old.attributes['height'].nodeValue = toBeDeleted.attributes['height'].nodeValue;
 
+      toBeDeleted.remove();
 
+      window._unityInstance.SendMessage('GameManager', 'JS_ResetViewer', '');
 
-    window._unityInstance = ""; 
-    var canvas = document.querySelector("#unity-canvas");
-    var buildUrl = "Build";
-    var config = {
-      dataUrl: buildUrl + "/23.data",
-      frameworkUrl: buildUrl + "/23.framework.js",
-      codeUrl: buildUrl + "/23.wasm",
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "DefaultCompany",
-      productName: "FM-BIM-Viewer",
-      productVersion: "0.1",
-    };
+      //bring viewer back
 
-      window.createUnityInstance(canvas, config, (progress) => {
-      }).then((unityInstance) => {
-        window._unityInstance = unityInstance;
-      }).catch((message) => {
-        //alert(message);
-      });
+    }else
+    {
+      document.getElementById('unity-canvas').attributes['original'].nodeValue = "0"
+     //// document.getElementById('unity-canvas').attributes['original'].nodeValue = "2"
+     // alert('B')
+      this.props.OnViewerFirstLoad(true)
+      //firstTime
+      window._unityInstance = ""; 
+      var canvas = document.querySelector("#unity-canvas");
+      var buildUrl = "Build";
+      var config = {
+        dataUrl: buildUrl + "/23.data",
+        frameworkUrl: buildUrl + "/23.framework.js",
+        codeUrl: buildUrl + "/23.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "FM-BIM-Viewer",
+        productVersion: "0.1",
+      };
+      
+        window.createUnityInstance(canvas, config, (progress) => {console.log(progress);
+        }).then((unityInstance) => {
+          window._unityInstance = unityInstance;
+        }).catch((message) => {
 
-
-
-
-
+        });
+    }
 
 
 
@@ -460,7 +438,7 @@ import loadingGif from '../media/ss.gif';
 
         <div className='ViewerContainer'>
             <div id="unity-container" class="unity-desktop">
-              <canvas tabindex="1" id="unity-canvas" width="640" height="480"></canvas>
+              <canvas className='drawingCanvas' tabindex="1" id="unity-canvas" width="640" height="480" original="1"></canvas>
             </div>
         </div>
         <div className={`ViewerLoadingContainer-back `} id="ViewerLoadingContainer-backID"></div>
@@ -483,7 +461,7 @@ import loadingGif from '../media/ss.gif';
 }
 const mapStateToProps = (state) => ({state})
 
-export default connect(mapStateToProps , {OnRevitElementSelected,OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnToggleBrowserVisability,OnToggleWorkordersVisability,OnIssueViewInViewer})(_Gall_Viewer_page);
+export default connect(mapStateToProps , {OnRevitElementSelected,OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnToggleBrowserVisability,OnToggleWorkordersVisability,OnIssueViewInViewer,OnViewerFirstLoad})(_Gall_Viewer_page);
 
 
 

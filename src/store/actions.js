@@ -60,3 +60,9 @@ export const OnIssueViewInViewer = (payload) => ({
         payload
     
 })
+export const OnViewerFirstLoad = (payload) => ({
+
+        type:'ON_VIEWER_FIRST_LOAD',
+        payload
+    
+})

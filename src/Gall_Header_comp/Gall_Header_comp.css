@@ -73,3 +73,7 @@
 
 
   #textBox{ z-index:10000000000000000; }
+
+  #fakeViewerContainer{
+    display: none;
+  }

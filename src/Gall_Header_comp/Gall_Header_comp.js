@@ -81,6 +81,7 @@ var w = setInterval(() => {
 
     return (
       <>
+      
           <nav class="navbar navbar-expand-sm bg-dark navbar-dark mainGallNav">
             <div class="container-fluid">
               <a target="_blank" class="navbar-brand gall-navbar-brand Aeonic-Bold" href="https://www.thegallium.com/">Gallium.</a>
@@ -95,6 +96,7 @@ var w = setInterval(() => {
               </div>
             </div>
           </nav>
+          <div id='fakeViewerContainer'></div>
 
       </>
     );
