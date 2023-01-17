@@ -4,6 +4,7 @@ import './App.css';
 
 import _Gall_Viewer_page from './_Gall_Viewer_page/_Gall_Viewer_page'
 import _Gall_Issues_page from './_Gall_Issues_page/_Gall_Issues_page'
+import _Gall_Issues_page_clone from './_Gall_Issues_page_clone/_Gall_Issues_page_clone'
 import Gall_Header_comp from './Gall_Header_comp/Gall_Header_comp'
 
 
@@ -49,8 +50,8 @@ function App() {
     
     <Route path='/project' exact component={_Gall_Viewer_page} />
     <Route path='/' exact component={_Gall_Viewer_page} />
-    <Route path='/issues/:id?/:eid?/:type?/:typeC?/:effect?/:title?/:desc?/:email?/:initDate?' component={_Gall_Issues_page} />
-    
+    <Route path='/issues' exact component={_Gall_Issues_page} />
+    <Route path='/issues/:id/:eid/:type/:typeC/:effect/:title/:desc/:email/:initDate' exact component={_Gall_Issues_page_clone} />
     {/* <Route path='/profile' exact component={Profile_Page_comp} />
     <Route path='/user' exact component={User_Profile_Page_comp} />
     <Route path='/project' exact component={Project_PageTS_comp} />

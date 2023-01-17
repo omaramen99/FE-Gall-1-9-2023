@@ -32,6 +32,7 @@ import loadingGif from '../media/ss.gif';
     this.props.OnToggleBrowserVisability(false)
     this.props.OnToggleWorkordersVisability(false)
     this.props.OnViewerLoad(false);
+
   }
   componentDidMount()
   {
@@ -168,6 +169,36 @@ import loadingGif from '../media/ss.gif';
       //// viewerCanvas.attributes['height'].value = window.innerHeight * 0.9
       //// viewerCanvas.attributes['width'].value = window.innerWidth * 0.9
     }
+
+
+
+
+    window._unityInstance = ""; 
+    var canvas = document.querySelector("#unity-canvas");
+    var buildUrl = "Build";
+    var config = {
+      dataUrl: buildUrl + "/23.data",
+      frameworkUrl: buildUrl + "/23.framework.js",
+      codeUrl: buildUrl + "/23.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "FM-BIM-Viewer",
+      productVersion: "0.1",
+    };
+
+      window.createUnityInstance(canvas, config, (progress) => {
+      }).then((unityInstance) => {
+        window._unityInstance = unityInstance;
+      }).catch((message) => {
+        //alert(message);
+      });
+
+
+
+
+
+
+
 
   }
   
@@ -443,33 +474,7 @@ import loadingGif from '../media/ss.gif';
         
 
 
-        <Helmet>
-          <script>{`
-
-          
-            var _unityInstance = ""; 
-            var canvas = document.querySelector("#unity-canvas");
-            var buildUrl = "Build";
-            var config = {
-              dataUrl: buildUrl + "/23.data",
-              frameworkUrl: buildUrl + "/23.framework.js",
-              codeUrl: buildUrl + "/23.wasm",
-              streamingAssetsUrl: "StreamingAssets",
-              companyName: "DefaultCompany",
-              productName: "FM-BIM-Viewer",
-              productVersion: "0.1",
-            };
-  
-              createUnityInstance(canvas, config, (progress) => {
-              }).then((unityInstance) => {
-                _unityInstance = unityInstance;
-              }).catch((message) => {
-                //alert(message);
-              });
-
-
-        `}</script>
-        </Helmet>
+       
       </>
     );
   }

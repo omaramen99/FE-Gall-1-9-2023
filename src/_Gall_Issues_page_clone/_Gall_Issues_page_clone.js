@@ -1,7 +1,7 @@
 
 //------------------------------------
 //-------------------------------------------------
-import './_Gall_Issues_page.css';
+import './_Gall_Issues_page_clone.css';
 
 
 
@@ -17,7 +17,7 @@ import xlsx from "json-as-xlsx"
 
 //import createUnityInstance from '../UnityBuild/Build/23.loader'
 
- class _Gall_Issues_page extends React.Component {
+ class _Gall_Issues_page_clone extends React.Component {
   state = {
     workorders:"",
 
@@ -35,8 +35,8 @@ import xlsx from "json-as-xlsx"
   componentDidMount()
   {
 
-    this.AddInitialIssues()
     this.RecordHistory()
+    this.AddInitialIssues()
 
     var xx = []
     setTimeout(() => {
@@ -213,7 +213,7 @@ var notesElements = []
            [
             
            ]
-          },
+          }
       ]
       if (isFromMail) {
         var issueUrlObj = this.props.match.params;
@@ -468,4 +468,4 @@ var notesElements = []
 }
 const mapStateToProps = (state) => ({state})
 
-export default connect(mapStateToProps , {OnRevitElementSelected,OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnIssueViewInViewer})(_Gall_Issues_page);
+export default connect(mapStateToProps , {OnRevitElementSelected,OnCreateWorkorder,OnViewerLoad,setHistoryObj,setMatchObj,OnIssueViewInViewer})(_Gall_Issues_page_clone);
