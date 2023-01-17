@@ -106,6 +106,7 @@
 .ViewerLoadingContainer-front
 {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
@@ -136,7 +137,18 @@
 {
   display: none;
 }
-
+.sssssss{
+  width: 20%;
+  background-color: #77bc1f !important;
+  height: 100%;
+  transition: all 0.5s;
+}
+.progress
+{
+  margin-top: 30px;
+  display: inline-block;
+    width: 30vw;
+}
 
 
 

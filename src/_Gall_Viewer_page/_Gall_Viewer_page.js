@@ -120,6 +120,8 @@ import loadingGif from '../media/ss.gif';
        }
     }
     if (this.props.state.firstTimeLoaded) {
+      var bar = document.getElementById('viewerLoadingProgressBarCont');
+      bar.style.display = `none`
      // alert('A')
       //initial settings -RESET-
       document.getElementById('unity-container').appendChild(document.getElementById('unity-canvas'))
@@ -168,7 +170,9 @@ import loadingGif from '../media/ss.gif';
         productVersion: "0.1",
       };
       
-        window.createUnityInstance(canvas, config, (progress) => {console.log(progress);
+        window.createUnityInstance(canvas, config, (progress) => {
+          var bar = document.getElementById('viewerLoadingProgressBar');
+          bar.style.width = `${progress * 100}%`
         }).then((unityInstance) => {
           window._unityInstance = unityInstance;
         }).catch((message) => {
@@ -446,7 +450,9 @@ import loadingGif from '../media/ss.gif';
           {/* <img src="https://media.giphy.com/media/FmcNeI0PnsAKs/giphy.gif"></img> */}
 
           <img  src={loadingGif}></img>
-
+          <div id='viewerLoadingProgressBarCont'  class="progress">
+          <div id='viewerLoadingProgressBar' class="progress-bar bg-success sssssss"></div>
+        </div>
           
         </div>
         
